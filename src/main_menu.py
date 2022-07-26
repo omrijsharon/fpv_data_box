@@ -9,6 +9,8 @@ from tkinter import ttk
 from utils.state_change import update_fc_state, update_goggles_state, map_fc_state_to_string, map_goggles_state_to_string, update_bottuns_by_state
 from utils.msp_functions import do_nothing
 from utils.helper_functions import is_config
+from functools import partial
+from config_menu import config_menu
 
 
 def Refresher():
@@ -25,8 +27,7 @@ if __name__ == '__main__':
     window.title("FPV Data Box")
     window.geometry('480x280')
     window.resizable(False, False)
-
-    print(is_config())
+    window.attributes('-topmost', 'false')
     # Variables
     ## FC
     fc_state = IntVar()
@@ -64,6 +65,10 @@ if __name__ == '__main__':
     btn_erase_flash.place(x=372, y=100)
     btn_copy = Button(window, text="Copy Log files and Videos", width=31, height=3, font=("Arial", 14), command=do_nothing)
     btn_copy.place(x=20, y=100)
+    config_state = fc_state.get() and goggles_state.get()
+    partial_config_menu = partial(config_menu, window,fc_dir, goggles_dir, config_state)
+    btn_config = Button(window, text="Configuration", width=39, height=2, font=("Arial", 14), command=partial_config_menu)
+    btn_config.place(x=20, y=38)
 
     # Progress Bar
     progbar_value.set(100*flash_used_space.get() / flash_total_space.get())
@@ -73,4 +78,6 @@ if __name__ == '__main__':
     lbl_progbar.place(x=165, y=215)
 
     Refresher()
+    if not is_config():
+        config_menu(window, fc_dir=fc_dir, goggles_dir=goggles_dir, state=0)
     window.mainloop()

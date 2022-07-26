@@ -11,7 +11,7 @@ def yaml_writer(file_name, data):
 
 def yaml_reader(file_name):
     with open(file_name, "r") as f:
-        return yaml.load(f)
+        return yaml.safe_load(f)
 
 
 def is_config():
