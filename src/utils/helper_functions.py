@@ -15,7 +15,7 @@ def yaml_reader(file_name):
 
 
 def is_config():
-    print(os.listdir(os.path.join(os.getcwd(), "config")))
+    # print(os.listdir(os.path.join(os.getcwd(), "config")))
     return len(os.listdir(os.path.join(os.getcwd(), "config"))) > 1
 
 
@@ -25,6 +25,15 @@ def get_btfl_port(): #MSP mode
             # print("{}: {} [{}]".format(port, desc, hwid))
             return port
     return None
+
+
+def convert_to_mode_input(pwm):
+    """
+    value for this element in 'blocks' of 25 where 0 == 900 and 48 == 2100
+    :param pwm: value between 900 and 2100
+    :return: value between 0 and 48
+    """
+    return int((pwm - 900) / 25)
 
 
 def get_os():
@@ -83,4 +92,4 @@ def get_dir(identifier_func):
 
 
 if __name__ == '__main__':
-    is_config()
+    print(convert_to_mode_input(900), convert_to_mode_input(2100))

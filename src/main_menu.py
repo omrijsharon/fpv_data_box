@@ -6,11 +6,20 @@ from datetime import datetime
 # from yamspy import MSPy
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 from utils.state_change import update_fc_state, update_goggles_state, map_fc_state_to_string, map_goggles_state_to_string, update_bottuns_by_state
-from utils.msp_functions import do_nothing
+from utils.msp_functions import do_nothing, bb_w_arm
 from utils.helper_functions import is_config
 from functools import partial
 from config_menu import config_menu
+
+
+def bb_w_arm_ui():
+    msg = bb_w_arm()
+    if msg == True:
+        messagebox.showinfo("Record Blackbox when Armed", "Success!\nBlackbox will be recorded when armed")
+    else:
+        messagebox.showerror("Record Blackbox when Armed", msg)
 
 
 def Refresher():
@@ -67,8 +76,10 @@ if __name__ == '__main__':
     btn_copy.place(x=20, y=100)
     config_state = fc_state.get() and goggles_state.get()
     partial_config_menu = partial(config_menu, window,fc_dir, goggles_dir, config_state)
-    btn_config = Button(window, text="Configuration", width=39, height=2, font=("Arial", 14), command=partial_config_menu)
+    btn_config = Button(window, text="Configuration", width=24, height=2, font=("Arial", 14), command=partial_config_menu)
     btn_config.place(x=20, y=38)
+    btn_arm_bb = Button(window, text="Record Blackbox\nwhen Armed", width=14, height=2, font=("Arial", 14), command=bb_w_arm_ui)
+    btn_arm_bb.place(x=295, y=38)
 
     # Progress Bar
     progbar_value.set(100*flash_used_space.get() / flash_total_space.get())
