@@ -75,10 +75,21 @@ def bb_w_arm():
         data = board.send_RAW_msg(MSPy.MSPCodes["MSP_SET_MODE_RANGE"], bytearray(msg))
         dataHandler = board.receive_msg()
         board.process_recv_data(dataHandler)
+    # TODO: BB rate and config
     return bb_w_arm()
 
 
-def erase_flash(serial_port):
+def get_data_flash():
+    serial_port = get_btfl_port()
+    with MSPy(device=serial_port, loglevel='WARNING') as board:
+        data = board.send_RAW_msg(MSPy.MSPCodes["MSP_DATAFLASH_SUMMARY"], [])
+        dataHandler = board.receive_msg()
+        board.process_recv_data(dataHandler)
+        return board.DATAFLASH
+
+
+def erase_flash():
+    serial_port = get_btfl_port()
     with MSPy(device=serial_port, loglevel='WARNING') as board:
         board.send_RAW_msg(MSPy.MSPCodes['MSP_DATAFLASH_ERASE'], data=[])
         dataHandler = board.receive_msg()
@@ -86,4 +97,4 @@ def erase_flash(serial_port):
 
 
 if __name__ == '__main__':
-    print(bb_w_arm())
+    print(get_data_flash())

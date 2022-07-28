@@ -47,8 +47,12 @@ def config_menu(window, fc_dir, goggles_dir, state=False):
             messagebox.showerror('Data Error', 'Error: Pilot list and drone list must contain at least one item.')
 
     def copy_data():
+        fc_dir.get()
         messagebox.showinfo(title="copy data",
-                            message=f"Drone: {lb_drone_name.get(ANCHOR)}, Pilot: {lb_pilot_name.get(ANCHOR)}")
+                            message=
+                            f"Drone: {lb_drone_name.get(ANCHOR)},"
+                            f" Pilot: {lb_pilot_name.get(ANCHOR)}"
+                            )
 
     def get_data_dir():
         dir_data.set(os.path.join(filedialog.askdirectory(), "fpv_data"))
@@ -140,8 +144,8 @@ def config_menu(window, fc_dir, goggles_dir, state=False):
         lb_drone_name.insert(END, *config["drones"])
         lb_pilot_name.insert(END, *config["pilots"])
 
-    # state False: configure mode
-    # state True: copy mode
+    # state False: start in configure mode, restrict copy mode
+    # state True: start in copy mode, configure mode is allowed
     if not is_config():
         configure_mode()
         state = is_config()
@@ -150,6 +154,6 @@ def config_menu(window, fc_dir, goggles_dir, state=False):
         copy_mode()
     else:
         configure_mode()
-
+        btn_mode.configure(state='disabled')
 
     popup_config.mainloop()
