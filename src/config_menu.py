@@ -162,7 +162,7 @@ def config_menu(window, fc_dir, goggles_dir, fc_state, state=False):
     btn_mode.place(x=14, y=247)
 
     # Updates the config if already exists
-    config_filename = os.path.join(os.getcwd(), "config", "pilots_and_drones.yaml")
+    config_filename = os.path.join(os.path.expanduser('~'), "fpv_data_box", "config", "pilots_and_drones.yaml")
     if os.path.exists(config_filename):
         config = yaml_reader(config_filename)
         dir_data.set(config["data_dir"])
