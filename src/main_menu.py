@@ -165,5 +165,5 @@ if __name__ == '__main__':
 
     Refresher()
     if not is_config():
-        config_menu(window, fc_dir=fc_dir, goggles_dir=goggles_dir, state=0)
+        config_menu(window, fc_dir=fc_dir, goggles_dir=goggles_dir, fc_state=fc_state, state=0)
     window.mainloop()
