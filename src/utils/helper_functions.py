@@ -47,9 +47,16 @@ def get_path_in_media_linux(sub_path_list):
     :return: path to desired dir
     """
     for user in os.listdir("/media"):
-        user_path = os.path.join("/media", user, *sub_path_list)
-        if os.path.exists(user_path):
-            return user_path
+        user_path = os.path.join("/media", user)
+        if "BETAFLT" in sub_path_list:
+            full_path = os.path.join(user_path, *sub_path_list)
+            if os.path.exists(full_path):
+                return full_path
+        else:
+            for sub_user_path in os.listdir(user_path):
+                full_path = os.path.join(user_path, sub_user_path, *sub_path_list)
+                if os.path.exists(full_path):
+                    return full_path
     return None
 
 

@@ -115,6 +115,7 @@ def config_menu(window, fc_dir, goggles_dir, fc_state, state=False):
     popup_config.title("FPV Data Box - Configure mode")
     popup_config.geometry('480x280')
     popup_config.resizable(False, False)
+    window.attributes("-fullscreen", True)
 
 
     # Choose Data Directory

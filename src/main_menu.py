@@ -97,6 +97,7 @@ if __name__ == '__main__':
     window.geometry('480x280')
     window.resizable(False, False)
     window.attributes('-topmost', 'false')
+    window.attributes("-fullscreen", True)
 
     # Variables
     ## FC
