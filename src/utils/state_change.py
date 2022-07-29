@@ -26,22 +26,27 @@ def update_fc_state(fc_state, fc_port, fc_dir, toggle_fc):
     return
 
 
-def update_bottuns_by_state(fc_state, goggles_state, btn_erase_flash, btn_copy, btn_arm_bb):
+def update_bottuns_by_state(fc_state, goggles_state, btn_erase_flash, btn_copy, btn_arm_bb, btn_reboot_flash_mode):
     if fc_state.get() == 0:
         btn_erase_flash.config(state="disabled")
         btn_copy.config(state="disabled")
         btn_arm_bb.config(state="disabled")
+        btn_reboot_flash_mode.config(state="disabled")
     elif fc_state.get() == 1:
         btn_erase_flash.config(state="normal")
         btn_arm_bb.config(state="normal")
-        btn_copy.config(state="disabled")
+        btn_reboot_flash_mode.config(state="normal")
+        btn_copy.config(state="normal")
+        if goggles_state.get() == 0:
+            btn_copy.config(state="disabled")
     elif fc_state.get() == 2:
         btn_erase_flash.config(state="disabled")
         btn_arm_bb.config(state="disabled")
+        btn_reboot_flash_mode.config(state="disabled")
+        btn_copy.config(state="normal")
         if goggles_state.get() == 0:
             btn_copy.config(state="disabled")
-        elif goggles_state.get() == 1:
-            btn_copy.config(state="normal")
+
 
 
 def update_goggles_state(goggles_state, goggles_dir):

@@ -3,10 +3,13 @@ from tkinter import *
 from tkinter import messagebox
 from utils.helper_functions import yaml_writer, yaml_reader
 from tkinter import filedialog
-from utils.helper_functions import is_config
+from copy_data_progress_bar_menu import copy_all_data
+from utils.helper_functions import is_config, get_dir, identifier_btfl
+from utils.msp_functions import reboot_flash_mode
+from time import sleep
 
 
-def config_menu(window, fc_dir, goggles_dir, state=False):
+def config_menu(window, fc_dir, goggles_dir, fc_state, state=False):
     # state False: configure mode
     # state True: copy mode
 
@@ -42,19 +45,38 @@ def config_menu(window, fc_dir, goggles_dir, state=False):
             }
             filename = os.path.join(os.getcwd(), "config", "pilots_and_drones.yaml")
             yaml_writer(filename, data)
-            popup_config.destroy()
+            if not state:
+                popup_config.destroy()
         else:
             messagebox.showerror('Data Error', 'Error: Pilot list and drone list must contain at least one item.')
 
     def copy_data():
-        fc_dir.get()
-        messagebox.showinfo(title="copy data",
-                            message=
-                            f"Drone: {lb_drone_name.get(ANCHOR)},"
-                            f" Pilot: {lb_pilot_name.get(ANCHOR)}"
-                            )
+        if lb_drone_name.get(ANCHOR) == "" or lb_pilot_name.get(ANCHOR) == "":
+            messagebox.showerror('Data Error', 'Error: Pilot and drone must be selected.')
+            return
+        # If FC in MSP mode, reboot to Flash mode and get Flash dir
+        if fc_state.get() == 1:
+            lbl_wait4reboot = Label(popup_config, text="Please wait.\nRebooting FC in Flash mode...")
+            lbl_wait4reboot.place(relx=.5, rely=.5, anchor="center")
+            popup_config.update()
+            reboot_flash_mode()
+            lbl_wait4reboot.destroy()
+            fc_state.set(2)
+            fc_dir.set(get_dir(identifier_btfl))
+        elif fc_state.get() == 0:
+            messagebox.showerror('Error', 'Error: FC is not recognized.')
+            return
 
-    def get_data_dir():
+        copy_all_data(
+            fc_src=fc_dir.get(),
+            googles_src=goggles_dir.get(),
+            dst_dir=dir_data.get(),
+            drone=lb_drone_name.get(ANCHOR),
+            pilot=lb_pilot_name.get(ANCHOR)
+        )
+        popup_config.destroy()
+
+    def ask_data_dir():
         dir_data.set(os.path.join(filedialog.askdirectory(), "fpv_data"))
 
     def configure_mode():
@@ -97,7 +119,7 @@ def config_menu(window, fc_dir, goggles_dir, state=False):
 
     # Choose Data Directory
     Label(popup_config, text="Data folder:").place(x=10, y=5)
-    btn_dir_data = Button(popup_config, text="Browse", width=14, command=get_data_dir)
+    btn_dir_data = Button(popup_config, text="Browse", width=14, command=ask_data_dir)
     btn_dir_data.place(x=359, y=23)
     dir_data = StringVar()
     dir_data.set(os.path.join(os.path.expanduser('~'), "fpv_data"))
@@ -131,8 +153,10 @@ def config_menu(window, fc_dir, goggles_dir, state=False):
     lb_pilot_name.place(x=x0+4, y=y0+48)
 
     # Save button that also saves the config
-    btn_save = Button(popup_config, text="Save config", width=14, bg="blue", fg="white", command=save_config)
-    btn_save.place(x=359, y=247)
+    btn_save = Button(popup_config, text="Save config", width=13, bg="blue", fg="white", command=save_config)
+    btn_save.place(x=365, y=247)
+    btn_cancel = Button(popup_config, text="Cancel", width=13, command=popup_config.destroy)
+    btn_cancel.place(x=254, y=247)
     btn_mode = Button(popup_config, text="Config mode", width=14, command=configure_mode)
     btn_mode.place(x=14, y=247)
 

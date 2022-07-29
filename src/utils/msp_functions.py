@@ -6,6 +6,14 @@ def do_nothing():
     pass
 
 
+def reboot_flash_mode():
+    serial_port = get_btfl_port()
+    with MSPy(device=serial_port, loglevel='WARNING') as board:
+        data = board.send_RAW_msg(MSPy.MSPCodes["MSP_SET_REBOOT"], [board.REBOOT_TYPES["MSC"]])
+        dataHandler = board.receive_msg()
+        board.process_recv_data(dataHandler)
+
+
 def get_aux(board):
     data = board.send_RAW_msg(MSPy.MSPCodes["MSP_MODE_RANGES"], [])
     dataHandler = board.receive_msg()
@@ -97,4 +105,4 @@ def erase_flash():
 
 
 if __name__ == '__main__':
-    print(get_data_flash())
+    reboot_flash_mode()
