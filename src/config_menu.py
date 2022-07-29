@@ -58,7 +58,7 @@ def config_menu(window, fc_dir, goggles_dir, fc_state, state=False):
         if fc_state.get() == 1:
             lbl_wait4reboot = Label(popup_config, text="Please wait.\nRebooting FC in Flash mode...")
             lbl_wait4reboot.place(relx=.5, rely=.5, anchor="center")
-            popup_config.update() # TODO: FIXTBUG: Stuck on linux
+            popup_config.update() # TODO: FIX BUG: Stuck on linux - find a workaround.
             reboot_flash_mode()
             lbl_wait4reboot.destroy()
             fc_state.set(2)
@@ -67,14 +67,18 @@ def config_menu(window, fc_dir, goggles_dir, fc_state, state=False):
             messagebox.showerror('Error', 'Error: FC is not recognized.')
             return
 
-        copy_all_data(
+        is_successful, exception = copy_all_data(
             fc_src=fc_dir.get(),
             googles_src=goggles_dir.get(),
             dst_dir=dir_data.get(),
             drone=lb_drone_name.get(ANCHOR),
             pilot=lb_pilot_name.get(ANCHOR)
         )
-        popup_config.destroy()
+        if is_successful:
+            messagebox.showinfo("Success", "Copying finished successfully.\nPlease reconnect the FC and Erase Flash")
+        else:
+            messagebox.showerror('Error', exception)
+        popup_config.destroy() #TODO: FIX BUG: doesn't close popup on linux. maybe because of the messagebox?
         popup_config.update()
 
     def ask_data_dir():

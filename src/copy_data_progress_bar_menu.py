@@ -66,8 +66,7 @@ def copy_all_data(fc_src, googles_src, dst_dir, drone, pilot):
 
     copy_window.destroy()
     copy_window.update()
-    messagebox.showinfo("Success", "Copying finished successfully.\nPlease reconnect the FC and Erase Flash")
-    return 0
+    return True, None
 
 if __name__ == '__main__':
     fc_src = get_dir(identifier_btfl)
