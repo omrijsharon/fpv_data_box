@@ -58,7 +58,7 @@ def config_menu(window, fc_dir, goggles_dir, fc_state, state=False):
         if fc_state.get() == 1:
             lbl_wait4reboot = Label(popup_config, text="Please wait.\nRebooting FC in Flash mode...")
             lbl_wait4reboot.place(relx=.5, rely=.5, anchor="center")
-            popup_config.update()
+            popup_config.update() # TODO: FIXTBUG: Stuck on linux
             reboot_flash_mode()
             lbl_wait4reboot.destroy()
             fc_state.set(2)
@@ -75,6 +75,7 @@ def config_menu(window, fc_dir, goggles_dir, fc_state, state=False):
             pilot=lb_pilot_name.get(ANCHOR)
         )
         popup_config.destroy()
+        popup_config.update()
 
     def ask_data_dir():
         dir_data.set(os.path.join(filedialog.askdirectory(), "fpv_data"))
@@ -113,9 +114,9 @@ def config_menu(window, fc_dir, goggles_dir, fc_state, state=False):
     popup_config.wm_transient(window)
     # popup_config.attributes('-topmost', 'true')
     popup_config.title("FPV Data Box - Configure mode")
-    popup_config.geometry('480x280')
+    popup_config.geometry('480x246')
     popup_config.resizable(False, False)
-    window.attributes("-fullscreen", True)
+    # window.attributes("-fullscreen", True)
 
 
     # Choose Data Directory
@@ -136,8 +137,8 @@ def config_menu(window, fc_dir, goggles_dir, fc_state, state=False):
     btn_drone_add = Button(popup_config, text="Add", command=add_drone_name)
     btn_drone_add.place(x=x0+184, y=y0+20)
     btn_drone_delete = Button(popup_config, text="Delete", command=delete_drone_name, width=29)
-    btn_drone_delete.place(x=x0+4, y=y0+166)
-    lb_drone_name = Listbox(popup_config, width=35, height=7, exportselection=False)
+    btn_drone_delete.place(x=x0+4, y=y0+133)
+    lb_drone_name = Listbox(popup_config, width=35, height=5, exportselection=False)
     lb_drone_name.place(x=x0+4, y=y0+48)
 
     # Add and delete pilots
@@ -149,17 +150,18 @@ def config_menu(window, fc_dir, goggles_dir, fc_state, state=False):
     btn_pilot_add = Button(popup_config, text="Add", command=add_pilot_name)
     btn_pilot_add.place(x=x0 + 184, y=y0 + 20)
     btn_pilot_delete = Button(popup_config, text="Delete", command=delete_pilot_name, width=29)
-    btn_pilot_delete.place(x=x0+4, y=y0+166)
-    lb_pilot_name = Listbox(popup_config, width=35, height=7, exportselection=False)
+    btn_pilot_delete.place(x=x0+4, y=y0+133)
+    lb_pilot_name = Listbox(popup_config, width=35, height=5, exportselection=False)
     lb_pilot_name.place(x=x0+4, y=y0+48)
 
     # Save button that also saves the config
+    y0 = 212
     btn_save = Button(popup_config, text="Save config", width=13, bg="blue", fg="white", command=save_config)
-    btn_save.place(x=365, y=247)
+    btn_save.place(x=365, y=y0)
     btn_cancel = Button(popup_config, text="Cancel", width=13, command=popup_config.destroy)
-    btn_cancel.place(x=254, y=247)
+    btn_cancel.place(x=254, y=y0)
     btn_mode = Button(popup_config, text="Config mode", width=14, command=configure_mode)
-    btn_mode.place(x=14, y=247)
+    btn_mode.place(x=14, y=y0)
 
     # Updates the config if already exists
     config_filename = os.path.join(os.path.expanduser('~'), "fpv_data_box", "config", "pilots_and_drones.yaml")

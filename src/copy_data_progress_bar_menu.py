@@ -20,6 +20,7 @@ def copy_all_data(fc_src, googles_src, dst_dir, drone, pilot):
     copy_window.geometry('250x150')
     copy_window.resizable(False, False)
     copy_window.title("Copying files...")
+    copy_window.attributes('-topmost', True)
     btn_cancel = tk.Button(copy_window, text="Cancel", command=cancel_command)
     btn_cancel.place(x=98, y=110)
 
@@ -64,6 +65,7 @@ def copy_all_data(fc_src, googles_src, dst_dir, drone, pilot):
         return False, "Error copying MP4 and SRT files"
 
     copy_window.destroy()
+    copy_window.update()
     messagebox.showinfo("Success", "Copying finished successfully.\nPlease reconnect the FC and Erase Flash")
     return 0
 
