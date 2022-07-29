@@ -43,7 +43,7 @@ def config_menu(window, fc_dir, goggles_dir, fc_state, state=False):
                 "pilots": get_pilot_name_list(),
                 "drones": get_drone_name_list()
             }
-            filename = os.path.join(os.getcwd(), "config", "pilots_and_drones.yaml")
+            filename = os.path.join(os.path.expanduser('~'), "fpv_data_box", "config", "pilots_and_drones.yaml")
             yaml_writer(filename, data)
             if not state:
                 popup_config.destroy()
