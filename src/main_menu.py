@@ -94,7 +94,7 @@ def Refresher():
 if __name__ == '__main__':
     window = Tk()
     window.title("FPV Data Box")
-    # window.geometry('480x280')
+    window.geometry('480x280')
     window.resizable(False, False)
     window.attributes('-topmost', 'false')
     window.attributes("-fullscreen", True)
