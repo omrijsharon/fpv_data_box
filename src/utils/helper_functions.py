@@ -15,8 +15,9 @@ def yaml_reader(file_name):
 
 
 def is_config():
-    # print(os.listdir(os.path.join(os.getcwd(), "config")))
-    return len(os.listdir(os.path.join(os.getcwd(), "config"))) > 1
+    fpv_data_box_dir = os.path.join(os.path.expanduser('~'), "fpv_data_box", "config")
+    os.path.exists(fpv_data_box_dir) or os.makedirs(fpv_data_box_dir)
+    return os.path.exists(os.path.join(fpv_data_box_dir, "pilots_and_drones.yaml"))
 
 
 def get_btfl_port(): #MSP mode

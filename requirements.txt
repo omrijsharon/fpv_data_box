@@ -1,0 +1,5 @@
+pyserial==3.5
+pywin32==304
+PyYAML==6.0
+WMI==1.5.1
+yamspy @ file:///C:/Users/omrijsharon/Documents/repos/YAMSPy

@@ -87,27 +87,3 @@ def copy_video_files(copy_window, progress_goggles_var, lbl_goggles_file_copy,
             copy_window.update()
     lbl_goggles_file_copy.config(text=f"Finished copying files from Goggles.")
     return True
-
-
-def copy_all_data(fc_src, googles_src, dst_dir, drone, pilot):
-    # TODO: move to progress bar menu
-    batch_dst_dir = create_current_dst_dir(dst_dir)
-
-    logfile_list = log_files_list(fc_src)
-    logfile_list_len = len(logfile_list)
-    video_srt_files_list = os.listdir(googles_src)[-2 * logfile_list_len:]
-
-    dst_filename_list = create_dst_filename_list(logfile_list, drone, pilot)
-
-    is_equal, exception = check_same_n_files(dst_filename_list, video_srt_files_list)
-    if not is_equal:
-        return False, exception
-
-    # Copies BBL files
-    if not copy_log_files(fc_src, batch_dst_dir, logfile_list, dst_filename_list):
-        return False, "Error copying BBL files"
-
-    # Copies MP4 and SRT files
-    if not copy_video_files(googles_src, batch_dst_dir, video_srt_files_list, dst_filename_list):
-        return False, "Error copying MP4 and SRT files"
-    return True, None

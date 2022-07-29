@@ -122,7 +122,7 @@ def config_menu(window, fc_dir, goggles_dir, fc_state, state=False):
     btn_dir_data = Button(popup_config, text="Browse", width=14, command=ask_data_dir)
     btn_dir_data.place(x=359, y=23)
     dir_data = StringVar()
-    dir_data.set(os.path.join(os.path.expanduser('~'), "fpv_data"))
+    dir_data.set(os.path.join(os.path.expanduser('~'), "fpv_data_box", "data"))
     ent_dir_data = Entry(popup_config, textvariable=dir_data, width=57)
     ent_dir_data.place(x=13, y=25)
 
