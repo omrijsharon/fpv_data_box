@@ -2,7 +2,7 @@
 The easiest way to copy your blackbox logs and videos from your FPV drone and goggles.
 Just take a small raspberry pi (or laptop with linux/windows) to your favorite spot, fly and fill the blackbox with logs, connect the flight controller to the raspberry pi, connect an sd card-reader and put your goggles sd card inside. The app will do the rest!
 
-# Operating system
+## Operating system
 Linux / Windows
 
 ## What is it good for?
