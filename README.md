@@ -24,7 +24,7 @@ Linux / Windows
 * Select the folder you want to copy the logs and videos to.
 * Add drones and pilots to the list.
 * Save.
-### Later Use:
+### Regular Use:
 * Click on "Edit Config".
 * Repeat the steps above (First Use).
 
