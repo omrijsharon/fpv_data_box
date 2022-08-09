@@ -7,7 +7,7 @@ Linux / Windows
 
 ## What is it good for?
 * Stabilizing your fpv videos with GyroFlow.
-* Calibrating your PIDs with Betaflight Blackbox Explorer.
+* Calibrating your PIDs with [Betaflight Blackbox Explorer](https://github.com/betaflight/blackbox-log-viewer).
 
 ## What is it actually meant for?
 * Creating the largest dataset of FPV flights, meant for:
