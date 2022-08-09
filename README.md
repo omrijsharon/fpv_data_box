@@ -6,7 +6,7 @@ Just take a small raspberry pi (or laptop with linux/windows) to your favorite s
 Linux / Windows
 
 ## What is it good for?
-* Stabilizing your fpv videos with GyroFlow.
+* Stabilizing your fpv videos with [GyroFlow](https://github.com/gyroflow/gyroflow).
 * Calibrating your PIDs with [Betaflight Blackbox Explorer](https://github.com/betaflight/blackbox-log-viewer).
 
 ## What is it actually meant for?
