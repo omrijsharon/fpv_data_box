@@ -32,6 +32,6 @@ Linux / Windows
 ## How to use it?
 * Connect the flight controller to the raspberry pi / laptop.
 * Connect the sd card-reader (with the goggles sd card) to the raspberry pi / laptop.
-* Click on the largest button in the app (named: Copy Log files and Videos).
+* Click on "Copy Log files and Videos" (the largest button in the app).
 * Select Drone and Pilot.
-* Click on the blue button (named: Copy).
+* Click on "Copy" (the blue button).
