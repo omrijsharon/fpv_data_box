@@ -16,7 +16,7 @@ Linux / Windows
   * Inverse Reinforcement Learning.
   * Flight models of FPV drones.
   * Flight characteristics of FPV pilots.
-  * FPV Photorealistic Neural-Simulation using the algorithms from:
+ * FPV Photorealistic Neural-Simulation using the algorithms from:
    * [World Model](https://worldmodels.github.io/).
    * Google's [Dreamer V2](https://ai.googleblog.com/2021/02/mastering-atari-with-discrete-world.html).
 
