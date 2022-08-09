@@ -11,10 +11,14 @@ Linux / Windows
 
 ## What is it actually meant for?
 * Creating the largest dataset of FPV flights, meant for:
-  * Offline and Inverse Reinforcement Learning.
+  * Imitation learning
+  * Offline Reinforcement Learning.
+  * Inverse Reinforcement Learning.
   * Flight models of FPV drones.
   * Flight characteristics of FPV pilots.
-  * FPV Photorealistic Neural-Simulation (Using World Model and Google's Dreamer V2 algorithms).
+  * FPV Photorealistic Neural-Simulation using the algorithms from:
+   * [World Model](https://worldmodels.github.io/).
+   * Google's [Dreamer V2](https://ai.googleblog.com/2021/02/mastering-atari-with-discrete-world.html).
 
 ## Installation
 - TBA
