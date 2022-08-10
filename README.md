@@ -34,6 +34,7 @@ Linux / Windows
 
 
 ## How to use it?
+* Run the main file: src/main_menu.py (i.e. python3 src/main_menu.py)
 * Connect the flight controller to the raspberry pi / laptop.
 * Connect the sd card-reader (with the goggles sd card) to the raspberry pi / laptop.
 * Click on "Copy Log files and Videos" (the largest button in the app).
