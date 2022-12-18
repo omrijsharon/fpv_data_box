@@ -8,7 +8,7 @@ from utils.copy_functions import *
 from utils.helper_functions import get_btfl_port, get_dir, identifier_btfl, identifier_goggles
 
 
-def copy_all_data(fc_src, googles_src, dst_dir, drone, pilot):
+def copy_all_data(fc_src, video_src, dst_dir, drone, pilot):
     def cancel_command():
         answer = messagebox.askyesno("Cancel copy", "Are you sure you want to cancel copying files?")
         if answer:
@@ -45,12 +45,13 @@ def copy_all_data(fc_src, googles_src, dst_dir, drone, pilot):
 
     logfile_list = log_files_list(fc_src)
     logfile_list_len = len(logfile_list)
-    video_srt_files_list = os.listdir(googles_src)[-2 * logfile_list_len:]
+    # video_srt_files_list = os.listdir(video_src)[-2 * logfile_list_len:]
+    video_files_list = sorted([filename for filename in os.listdir(video_src) if filename.split(".")[-1].lower() == "mp4"])[-logfile_list_len:]
 
     dst_filename_list = create_dst_filename_list(logfile_list, drone, pilot)
     #dst_filename_list[0].split("__")[-1].split("_")[1::2] # get drone and pilot of the first file
 
-    is_equal, exception = check_same_n_files(dst_filename_list, video_srt_files_list)
+    is_equal, exception = check_same_n_files(dst_filename_list, video_files_list)
     if not is_equal:
         return False, exception
 
@@ -61,7 +62,7 @@ def copy_all_data(fc_src, googles_src, dst_dir, drone, pilot):
 
     # Copies MP4 and SRT files
     if not copy_video_files(copy_window, progress_goggles_var, lbl_goggles_file_copy,
-                            googles_src, batch_dst_dir, video_srt_files_list, dst_filename_list):
+                            video_src, batch_dst_dir, video_files_list, dst_filename_list):
         return False, "Error copying MP4 and SRT files"
 
     copy_window.destroy()

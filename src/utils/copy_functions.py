@@ -42,9 +42,9 @@ def create_dst_filename_list(file_list, drone, pilot):
     return dst_filename_list
 
 
-def check_same_n_files(dst_filename_list, video_srt_files_list):
+def check_same_n_files(dst_filename_list, video_files_list):
     n_log_files = len(dst_filename_list)
-    n_video_files = int(len(video_srt_files_list) / 2)
+    n_video_files = len(video_files_list)
     if not n_video_files == n_log_files:
         exception = f"Number of videos ({n_video_files}) and number log-files ({n_log_files}) do not match."
         return False, exception
@@ -68,22 +68,35 @@ def copy_log_files(copy_window, progress_var_fc, lbl_fc_file_copy,
 
 
 def copy_video_files(copy_window, progress_goggles_var, lbl_goggles_file_copy,
-                     googles_src, batch_dst_dir, video_srt_files_list, dst_filename_list):
-    video_srt_files_list_left = deepcopy(video_srt_files_list)
-    total_size = file_list_size(googles_src, video_srt_files_list)
+                     video_src, batch_dst_dir, video_files_list, dst_filename_list):
+    video_files_list_left = deepcopy(video_files_list)
+    total_size = file_list_size(video_src, video_files_list)
     for n, dst_file in enumerate(dst_filename_list):
+        src_filename = video_files_list[n]
+        lbl_goggles_file_copy.config(text=f"Video: copying file: {src_filename}")
+        src_extension = src_filename.split(".")[-1]
+        dst_filename = dst_file + "." + src_extension
+        src_file = os.path.join(video_src, src_filename)
+        dst_file_w_extension = os.path.join(batch_dst_dir, dst_filename)
+        shutil.copy(src_file, dst_file_w_extension)
+        del video_files_list_left[0]
+        progress_goggles_var.set((1 - file_list_size(video_src, video_files_list_left) / total_size) * 100)
+        copy_window.update()
+        # Legacy code: copy both video and srt files
+        """
         even = 2 * n
         odd = 2 * n + 1
         for k in [even, odd]:
-            src_filename = video_srt_files_list[k]
+            src_filename = video_files_list[k]
             lbl_goggles_file_copy.config(text=f"Goggles: copying file: {src_filename}")
             src_extension = src_filename.split(".")[-1]
             dst_filename = dst_file + "." + src_extension
-            src_file = os.path.join(googles_src, src_filename)
+            src_file = os.path.join(video_src, src_filename)
             dst_file_w_extension = os.path.join(batch_dst_dir, dst_filename)
             shutil.copy(src_file, dst_file_w_extension)
-            del video_srt_files_list_left[0]
-            progress_goggles_var.set((1 - file_list_size(googles_src, video_srt_files_list_left) / total_size) * 100)
+            del video_files_list_left[0]
+            progress_goggles_var.set((1 - file_list_size(video_src, video_files_list_left) / total_size) * 100)
             copy_window.update()
-    lbl_goggles_file_copy.config(text=f"Finished copying files from Goggles.")
+        """
+    lbl_goggles_file_copy.config(text=f"Finished copying video files.")
     return True

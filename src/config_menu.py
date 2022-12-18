@@ -69,7 +69,7 @@ def config_menu(window, fc_dir, goggles_dir, fc_state, state=False):
 
         is_successful, exception = copy_all_data(
             fc_src=fc_dir.get(),
-            googles_src=goggles_dir.get(),
+            video_src=goggles_dir.get(),
             dst_dir=dir_data.get(),
             drone=lb_drone_name.get(ANCHOR),
             pilot=lb_pilot_name.get(ANCHOR)
